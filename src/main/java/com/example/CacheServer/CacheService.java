@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +22,15 @@ public class CacheService {
 
 
 
-    public ResponseEntity<?> fetchData(){
+    public ResponseEntity<?> fetchData(HttpServletRequest request){
+        HttpMethod method = HttpMethod.valueOf(request.getMethod());
+        String path = request.getRequestURI();
+        String queryString = request.getQueryString();
+        String target = origin + path + (queryString != null ? "?" + queryString : "");
+
         ResponseEntity<?> response = restClient
-                .get()
-                .uri(origin)
+                .method(method)
+                .uri(target)
                 .retrieve()
                 .toEntity(String.class);
 
