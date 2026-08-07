@@ -27,10 +27,24 @@ public class CacheService {
         String path = request.getRequestURI();
         String queryString = request.getQueryString();
         String target = origin + path + (queryString != null ? "?" + queryString : "");
+        System.out.println("Forwarding request to: " + target);
 
         ResponseEntity<?> response = restClient
                 .method(method)
                 .uri(target)
+                .retrieve()
+                .toEntity(String.class);
+
+        return response;
+    }
+
+
+    //test
+    public ResponseEntity<?> fetch1Data(){
+
+        ResponseEntity<?> response = restClient
+                .get()
+                .uri("https://dummyjson.com/products")
                 .retrieve()
                 .toEntity(String.class);
 

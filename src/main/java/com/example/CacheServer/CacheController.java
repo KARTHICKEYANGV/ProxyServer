@@ -15,9 +15,18 @@ public class CacheController {
 
     @RequestMapping("/**")
     public ResponseEntity<?> forwardRequest(HttpServletRequest request) {
+        System.out.println("Received request: " + request.getMethod() + " " + request.getRequestURI());
         // Implement the logic to forward the request to the cache server
         // and return the response.
         return new ResponseEntity<>(cacheService.fetchData(request), HttpStatus.OK);
+    }
+
+    //test
+    @GetMapping("/forward")
+    public ResponseEntity<?> forwardRequest() {
+        // Implement the logic to forward the request to the cache server
+        // and return the response.
+        return new ResponseEntity<>(cacheService.fetch1Data(), HttpStatus.OK);
     }
 
 }
