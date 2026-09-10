@@ -18,15 +18,16 @@ public class CacheController {
         System.out.println("Received request: " + request.getMethod() + " " + request.getRequestURI());
         // Implement the logic to forward the request to the cache server
         // and return the response.
-        return new ResponseEntity<>(cacheService.fetchData(request), HttpStatus.OK);
+        return cacheService.fetchData(request);
     }
 
-    //test
-    @GetMapping("/forward")
-    public ResponseEntity<?> forwardRequest() {
-        // Implement the logic to forward the request to the cache server
-        // and return the response.
-        return new ResponseEntity<>(cacheService.fetch1Data(), HttpStatus.OK);
+
+    @GetMapping("/clear-cache")
+    public ResponseEntity<String> clearCache() {
+        cacheService.clearCache();
+        return ResponseEntity.ok("Cache cleared");
     }
+
+
 
 }
