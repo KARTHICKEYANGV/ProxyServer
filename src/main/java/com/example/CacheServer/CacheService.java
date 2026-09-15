@@ -21,6 +21,10 @@ public class CacheService {
     @Value("${proxy.origin}")
     private String origin;
 
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
     public ResponseEntity<?> fetchData(HttpServletRequest request) {
 
         HttpMethod method = HttpMethod.valueOf(request.getMethod());

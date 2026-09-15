@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class CommandLineHandler implements CommandLineRunner {
 
     private final CacheStore cacheStore;
+    private final CacheService cacheService;
 
     @Override
     public void run(String... args) {
@@ -24,7 +25,9 @@ public class CommandLineHandler implements CommandLineRunner {
             }
 
             if (args[i].equals("--origin") && i + 1 < args.length) {
-                System.out.println("Origin: " + args[i + 1]);
+                String origin = args[i + 1];
+                cacheService.setOrigin(origin);
+                System.out.println("Origin: " + origin);
             }
 
             if (args[i].equals("--clear-cache")) {
